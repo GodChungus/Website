@@ -149,7 +149,7 @@
 						<h2>About This Project</h2>
 					</header>
 
-					<a href="#" class="image featured"><img src="images/laplace_project.png" alt="Laplace Project Overview" /></a>
+					<a href="#" class="image featured"><img src="images/laplace_project.png" style = "display: block; margin: 0 auto; width: 30%" alt="Laplace Project Overview" /></a>
 
 					<p>This project is part of my 2026 Science and IT Exhibition, and acts as a milestone in my studies
                         of mathematics and computer science. It demonstrates the use of Laplace transforms for solving 
@@ -159,10 +159,44 @@
 					<h3>Euler Method</h3>					
 						<p>The Euler Method is a first-order numerical procedure for solving ODEs with given initial conditions. It approximates
 							solutions by taking small steps along the tangent line of the curve, updating the next value based on the current
-							slope. Taking smaller step sizes increases accuracy.
+							slope. While it is simple and computationally easy, its accuracy heavily depends on the chosen step size.
 						</p>
+
+						<a href="#" class="image featured"><img src="images/eulerexp.png" style = "display:block; margin:0 auto; width:45%" alt = "Euler Method Example"></a>
 					
-					<h3> Runge-Kutta 4</h3>
+					<h3>Runge-Kutta 4</h3>
+					<p> The Runge-Kutta 4(RK4) method is a fourth-order numerical ODE solver that evaluates many slopes per step to achieve
+						a very high accuracy. It is widely used in computing due to it's perfect balance between performance and accuracy.
+					</p>
+
+					<a href="#" class = "image featured"><img src="images/rungekutta_exp.png" style = "display:block; margin: 0 auto; width: 45%" alt = "Runge Kutta 4"></a>
+
+					<h3>ODE Solver</h3>
+					<p> This is a Python-based ODE solver using SymPy that computes the exact solution of first-order ODEs, with given
+						initial conditions. The solver also generates numerical solutions for use in the Euler and Runge-Kutta 4 methods. This
+						allows for direct comparison between the analytical and numerical solutions.
+					</p>
+
+					<a href="#" class = "image featured"><img src="images/odesolve_exp.png" style = "display:block; margin: 0 auto; width: 45%" alt = "ODE Solver"></a>
+
+					<h3>Laplace Transform</h3>
+					<p>
+						The Laplace Transform is an analytical technique to convert time-domain ODEs into algebraic equations in the complex
+						frequency domain. It allows complex differential equations to be solved much easier by transforming derivatives into
+						polynomial expressions.
+
+						In this project, the Laplace Transform is computed using the SymPy library. Once transformed, the Laplace-domain expression
+						is converted into a numerical function. This then enables proper evaluation, plotting, and comparison with the numerical 
+						solutions obtained through numerical methods like Euler's Method and Runge-Kutta 4.
+
+						The project also includes three-dimensional visualizations of the Laplace-domain expressions. These plots show how the solution
+						varies with respect to the expression. By visualizing the magnitude and shape of the Laplace transform in three dimensions,
+						the complex relations of the function that are not easily seen in the original function can become clearer. This provides
+						information on system stability, decay rates, and the overall function's behavior. The 3D Visualizations offer an intuitive,
+						graphical perspective of how differential equation solutions behave across different domains.
+					</p>
+
+					<a href="#" class = "image featured"><img src="images/laplace_thing.jpg" style = "display:block; margin: 0 auto; width: 45%" alt = "ODE Solver"></a>
 
 				</div>
 			</section>

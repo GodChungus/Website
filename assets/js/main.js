@@ -1,123 +1,183 @@
-/*
-	Prologue by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+const entrance =
+    document.getElementById("entrance");
 
-(function($) {
+const music =
+    document.getElementById("music");
 
-	var	$window = $(window),
-		$body = $('body'),
-		$nav = $('#nav');
+const musicPlayer =
+    document.getElementById("music-player");
 
-	// Breakpoints.
-		breakpoints({
-			wide:      [ '961px',  '1880px' ],
-			normal:    [ '961px',  '1620px' ],
-			narrow:    [ '961px',  '1320px' ],
-			narrower:  [ '737px',  '960px'  ],
-			mobile:    [ null,     '736px'  ]
-		});
+const musicToggle =
+    document.getElementById("music-toggle");
 
-	// Play initial animations on page load.
-		$window.on('load', function() {
-			window.setTimeout(function() {
-				$body.removeClass('is-preload');
-			}, 100);
-		});
+const nameFirst =
+    document.querySelector(".name-first");
 
-	// Nav.
-		var $nav_a = $nav.find('a');
+const nameLast =
+    document.querySelector(".name-last");
 
-		$nav_a
-			.addClass('scrolly')
-			.on('click', function(e) {
+music.volume = 0.1;
 
-				var $this = $(this);
 
-				// External link? Bail.
-					if ($this.attr('href').charAt(0) != '#')
-						return;
+/* icons */
 
-				// Prevent default.
-					e.preventDefault();
+const pauseIcon = `
+    <span class="pause-icon">
+        <span></span>
+        <span></span>
+    </span>
+`;
 
-				// Deactivate all links.
-					$nav_a.removeClass('active');
+const playIcon = `
+    <span class="play-icon"></span>
+`;
 
-				// Activate link *and* lock it (so Scrollex doesn't try to activate other links as we're scrolling to this one's section).
-					$this
-						.addClass('active')
-						.addClass('active-locked');
 
-			})
-			.each(function() {
+/* initial state */
 
-				var	$this = $(this),
-					id = $this.attr('href'),
-					$section = $(id);
+musicToggle.innerHTML = pauseIcon;
 
-				// No section for this link? Bail.
-					if ($section.length < 1)
-						return;
 
-				// Scrollex.
-					$section.scrollex({
-						mode: 'middle',
-						top: '-10vh',
-						bottom: '-10vh',
-						initialize: function() {
+/* typing animation */
 
-							// Deactivate section.
-								$section.addClass('inactive');
+function typeName() {
 
-						},
-						enter: function() {
+    const firstName = "Prakrit";
+    const lastName = " Gajurel";
 
-							// Activate section.
-								$section.removeClass('inactive');
+    let firstIndex = 0;
+    let lastIndex = 0;
 
-							// No locked links? Deactivate all links and activate this section's one.
-								if ($nav_a.filter('.active-locked').length == 0) {
+    function typeFirst() {
 
-									$nav_a.removeClass('active');
-									$this.addClass('active');
+        if (firstIndex < firstName.length) {
 
-								}
+            nameFirst.textContent +=
+                firstName[firstIndex];
 
-							// Otherwise, if this section's link is the one that's locked, unlock it.
-								else if ($this.hasClass('active-locked'))
-									$this.removeClass('active-locked');
+            firstIndex++;
 
-						}
-					});
+            setTimeout(typeFirst, 200);
 
-			});
+        } else {
 
-	// Scrolly.
-		$('.scrolly').scrolly();
+            setTimeout(typeLast, 200);
 
-	// Header (narrower + mobile).
+        }
 
-		// Toggle.
-			$(
-				'<div id="headerToggle">' +
-					'<a href="#header" class="toggle"></a>' +
-				'</div>'
-			)
-				.appendTo($body);
+    }
 
-		// Header.
-			$('#header')
-				.panel({
-					delay: 500,
-					hideOnClick: true,
-					hideOnSwipe: true,
-					resetScroll: true,
-					resetForms: true,
-					side: 'left',
-					target: $body,
-					visibleClass: 'header-visible'
-				});
+    function typeLast() {
 
-})(jQuery);
+        if (lastIndex < lastName.length) {
+
+            nameLast.textContent +=
+                lastName[lastIndex];
+
+            lastIndex++;
+
+            setTimeout(typeLast, 100);
+
+        }
+
+    }
+
+    typeFirst();
+
+}
+
+
+/* click to enter */
+
+entrance.addEventListener("click", function () {
+
+    entrance.classList.add("leaving");
+
+    musicPlayer.classList.remove("hidden");
+
+    typeName();
+
+    music.play()
+        .then(function () {
+
+            musicPlayer.classList.add("playing");
+
+            musicToggle.innerHTML =
+                pauseIcon;
+
+        })
+        .catch(function (error) {
+
+            console.error(
+                "Could not play memento.mp3:",
+                error
+            );
+
+        });
+
+});
+
+
+/* play / pause */
+
+musicToggle.addEventListener("click", function () {
+
+    if (music.paused) {
+
+        music.play()
+            .then(function () {
+
+                musicPlayer.classList.add("playing");
+
+                musicToggle.innerHTML =
+                    pauseIcon;
+
+            })
+            .catch(function (error) {
+
+                console.error(
+                    "Could not play music:",
+                    error
+                );
+
+            });
+
+    } else {
+
+        music.pause();
+
+    }
+
+});
+
+
+/* music events */
+
+music.addEventListener("play", function () {
+
+    musicPlayer.classList.add("playing");
+
+    musicToggle.innerHTML =
+        pauseIcon;
+
+});
+
+
+music.addEventListener("pause", function () {
+
+    musicPlayer.classList.remove("playing");
+
+    musicToggle.innerHTML =
+        playIcon;
+
+});
+
+
+music.addEventListener("ended", function () {
+
+    musicPlayer.classList.remove("playing");
+
+    musicToggle.innerHTML =
+        playIcon;
+
+});

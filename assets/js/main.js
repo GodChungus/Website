@@ -1,3 +1,4 @@
+
 const entrance =
     document.getElementById("entrance");
 
@@ -16,7 +17,57 @@ const nameFirst =
 const nameLast =
     document.querySelector(".name-last");
 
+const musicArt =
+    document.getElementById("music-art");
+
+const musicTitle =
+    document.getElementById("music-title");
+
+const musicArtist =
+    document.getElementById("music-artist");
+
 music.volume = 0.1;
+
+
+/* songs */
+
+const songs = [
+    {
+        title: "Memento",
+        artist: "nonoc",
+        src: "music/memento.mp3",
+        image: "images/memento.jpg"
+    },
+    {
+        title: "Ender Ember",
+        artist: "MYTH & ROID, TK from Ling tosite sigure",
+        src: "music/ender_ember.mp3",
+        image: "images/ender_ember.png"
+    },
+    {
+        title: "Stay Alive",
+        artist: "Rie Takahashi",
+        src: "music/stay_alive.mp3",
+        image: "images/stay_alive.png"
+    }
+];
+
+
+/* choose a random song on every page load */
+
+const selectedSong =
+    songs[Math.floor(Math.random() * songs.length)];
+
+
+/* update the music player */
+
+music.src = selectedSong.src;
+
+musicArt.src = selectedSong.image;
+musicArt.alt = selectedSong.title + " artwork";
+
+musicTitle.textContent = selectedSong.title;
+musicArtist.textContent = selectedSong.artist;
 
 
 /* icons */
@@ -109,7 +160,7 @@ entrance.addEventListener("click", function () {
         .catch(function (error) {
 
             console.error(
-                "Could not play memento.mp3:",
+                "Could not play " + selectedSong.title + ":",
                 error
             );
 
